@@ -8,11 +8,92 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cicd Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>3.8.1</junit.version>
+		<org.springframework.version>5.1.7.RELEASE</org.springframework.version>
+		<boot.springframework.version>2.1.5.RELEASE</boot.springframework.version>
+		<security.springframework.version>5.1.5.RELEASE</security.springframework.version>
+		<camel-test-spring.version>3.0.0-M1</camel-test-spring.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>${boot.springframework.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${security.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${security.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-test-spring</artifactId>
+			<version>${camel-test-spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -20,13 +101,44 @@
 		<finalName>cicd</finalName>
 	</build>
 	<modules>
-		<module>cicd-services</module>
 		<module>cicd-business</module>
-		<module>data-access</module>
 		<module>cicd-common</module>
 		<module>cicd-services-company-a</module>
 		<module>cicd-services-company-b</module>
 		<module>cicd-services-internal</module>
 		<module>cicd-data-access</module>
+		<module>cicd-rules-engine</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>internal-app</id>
+			<modules>
+				<module>cicd-business</module>
+				<module>cicd-data-access</module>
+				<module>cicd-common</module>
+				<module>cicd-rules-engine</module>
+				<module>cicd-services-internal</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>external-app-v1</id>
+			<modules>
+				<module>cicd-business</module>
+				<module>cicd-data-access</module>
+				<module>cicd-common</module>
+				<module>cicd-rules-engine</module>
+				<module>cicd-services-company-a</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>external-app-v2</id>
+			<modules>
+				<module>cicd-business</module>
+				<module>cicd-data-access</module>
+				<module>cicd-common</module>
+				<module>cicd-rules-engine</module>
+				<module>cicd-services-company-b</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
