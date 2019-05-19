@@ -15,6 +15,8 @@
 		<boot.springframework.version>2.1.5.RELEASE</boot.springframework.version>
 		<security.springframework.version>5.1.5.RELEASE</security.springframework.version>
 		<camel-test-spring.version>3.0.0-M1</camel-test-spring.version>
+		<org.hibernate.version>5.4.2-Final</org.hibernate.version>
+		<org.hibernate.validator.version>3.5.6-Final</org.hibernate.validator.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -96,9 +98,68 @@
 			<version>${camel-test-spring.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+   <groupId>org.hibernate</groupId>
+   <artifactId>hibernate-core</artifactId>
+   <version>4.3.6.Final</version>
+</dependency>
+<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>${org.hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${org.hibernate.validator.version}</version>
+        </dependency>
+<dependency>
+   <groupId>mysql</groupId>
+   <artifactId>mysql-connector-java</artifactId>
+   <version>5.1.32</version>
+   <scope>runtime</scope>
+</dependency>
+<dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+        
 	</dependencies>
 	<build>
 		<finalName>cicd</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M3</version>
+			</plugin>
+		</plugins>
 	</build>
 	<modules>
 		<module>cicd-business</module>
